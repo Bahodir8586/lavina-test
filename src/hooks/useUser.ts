@@ -7,8 +7,8 @@ export const useGetUserInfo = () => {
   return useQuery(
     ["user"],
     async () => {
-      const res = await getUserInfo();
-      return res as IGetUserInfoResponse;
+      const { data } = await getUserInfo();
+      return data as IGetUserInfoResponse;
     },
     {
       staleTime: Infinity,

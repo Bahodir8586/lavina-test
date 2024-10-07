@@ -35,8 +35,8 @@ const getChipColor = (status: IBookStatus) => {
 export const StatusBadge: FC<IStatusBadgeProps> = ({ status }) => {
   return (
     <Chip
-      label={getChipLabel(status)}
-      color={getChipColor(status)}
+      label={getChipLabel(status.toString() as IBookStatus)}
+      color={getChipColor(status.toString() as IBookStatus)}
       className="statusBadge"
       sx={{ width: "5rem" }}
     />

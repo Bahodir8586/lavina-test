@@ -17,11 +17,18 @@ interface IBookCardProps {
   onDelete: () => void;
 }
 
+// Actually backend should send link to placeholder image, if there is no cover at book
+const DEFAULT_IMAGE_PLACEHOLDER = "https://picsum.photos/400/300";
+
 export const BookCard: FC<IBookCardProps> = ({ item, onEdit, onDelete }) => {
   const { book, status } = item;
   return (
     <StyledContainer className="bookCard">
-      <CardMedia component="img" image={book.cover} alt={book.title} />
+      <CardMedia
+        component="img"
+        image={book.cover || DEFAULT_IMAGE_PLACEHOLDER}
+        alt={book.title}
+      />
       <CardContent>
         <Typography variant="h5" align="center">
           {book.title}

@@ -13,8 +13,8 @@ export const useSearchBooks = (query: string) => {
   return useQuery(
     ["books", query],
     async () => {
-      const res = await searchBooks(query);
-      return res as ISearchBooksResponse;
+      const { data } = await searchBooks(query);
+      return data as ISearchBooksResponse;
     },
     {
       staleTime: 1000 * 60 * 5,
@@ -27,8 +27,8 @@ export const useGetBooks = () => {
   return useQuery(
     ["books"],
     async () => {
-      const res = await getBooks();
-      return res as IGetBooksResponse;
+      const { data } = await getBooks();
+      return data as IGetBooksResponse;
     },
     {
       // The response is stale as long as we mutate the data

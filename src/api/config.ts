@@ -1,5 +1,6 @@
 import axios, { AxiosRequestConfig } from "axios";
 import md5 from "md5";
+import { IApiResponse } from "types";
 import { notify } from "utils";
 
 const BASE_URL = "https://no23.lavina.tech";
@@ -9,10 +10,12 @@ const SECRET = "123";
 export const createSign = (config: AxiosRequestConfig) => {
   const requestMethod = config.method?.toUpperCase();
   const requestUrl = config.url;
-  const requestBody = JSON.stringify(config.data || {});
+  let requestBody;
   const userSecret = SECRET;
-  if (requestMethod === "GET") {
-    console.log(`${requestMethod}${requestUrl}${requestBody}${userSecret}`);
+  if (requestMethod === "GET" || requestMethod === "DELETE" || !config.data) {
+    requestBody = "";
+  } else {
+    requestBody = JSON.stringify(config.data);
   }
   return md5(`${requestMethod}${requestUrl}${requestBody}${userSecret}`);
 };
@@ -34,7 +37,9 @@ axiosInstance.interceptors.request.use(
   }
 );
 
-export const http = async (config: AxiosRequestConfig): Promise<unknown> => {
+export const http = async (
+  config: AxiosRequestConfig
+): Promise<IApiResponse> => {
   try {
     const res = await axiosInstance(config);
     return res;
